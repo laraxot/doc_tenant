@@ -10,13 +10,13 @@ use TightenCo\Jigsaw\Jigsaw;
 
 class GenerateSitemap
 {
-    protected $exclude = [
+    private array $exclude = [
         '/assets/*',
         '*/favicon.ico',
         '*/404',
     ];
 
-    public function handle(Jigsaw $jigsaw)
+    public function handle(Jigsaw $jigsaw): void
     {
         $baseUrl = $jigsaw->getConfig('baseUrl');
 
@@ -29,11 +29,9 @@ class GenerateSitemap
         $sitemap = new Sitemap($jigsaw->getDestinationPath() . '/sitemap.xml');
 
         collect($jigsaw->getOutputPaths())
-            ->reject(function ($path) {
-                return $this->isExcluded($path);
-            })->each(
-                function ($path) use ($baseUrl, $sitemap) {
-                    $sitemap->addItem(rtrim($baseUrl, '/') . $path, time(), Sitemap::DAILY);
+            ->reject(fn ($path) => $this->isExcluded($path))->each(
+                static function (string $path) use ($baseUrl, $sitemap): void {
+                    $sitemap->addItem(rtrim((string) $baseUrl, '/') . $path, time(), Sitemap::DAILY);
                 }
             );
 
