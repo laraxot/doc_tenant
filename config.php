@@ -9,8 +9,8 @@ $moduleName = 'Tenant';
 return [
     'baseUrl' => '',
     'production' => false,
-    'siteName' => 'Modulo ' . $moduleName,
-    'siteDescription' => 'Modulo ' . $moduleName,
+    'siteName' => 'Modulo '.$moduleName,
+    'siteDescription' => 'Modulo '.$moduleName,
     'lang' => 'it',
 
     'collections' => [
@@ -18,12 +18,12 @@ return [
             'path' => static fn ($page): string =>
                 // return $page->lang.'/posts/'.Str::slug($page->getFilename());
                 // return 'posts/' . ($page->featured ? 'featured/' : '') . Str::slug($page->getFilename());
-                'posts/' . Str::slug($page->getFilename()),
+                'posts/'.Str::slug($page->getFilename()),
         ],
         'docs' => [
             'path' => static fn ($page): string =>
                 // return $page->lang.'/docs/'.Str::slug($page->getFilename());
-                'docs/' . Str::slug($page->getFilename()),
+                'docs/'.Str::slug($page->getFilename()),
         ],
     ],
 
@@ -32,7 +32,7 @@ return [
     'docsearchIndexName' => env('DOCSEARCH_INDEX'),
 
     // navigation menu
-    'navigation' => require_once(__DIR__ . '/navigation.php'),
+    'navigation' => require_once(__DIR__.'/navigation.php'),
 
     // helpers
     'isActive' => static fn ($page, $path) => Str::endsWith(trimPath($page->getPath()), trimPath($path)),
@@ -58,7 +58,7 @@ return [
         }
 
         // return url('/'.$page->lang.'/'.trimPath($path));
-        return url('/' . trimPath($path));
+        return url('/'.trimPath($path));
     },
 
     'children' => static fn ($page, $docs) => $docs->where('parent_id', $page->id),
